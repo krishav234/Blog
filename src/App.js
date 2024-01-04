@@ -14,10 +14,6 @@ import Header from "./components/Header";
 import Auth from "./pages/Auth";
 import { auth } from "./firebase";
 import { signOut } from "firebase/auth";
-// import TagBlog from "./pages/TagBlog";
-// import CategoryBlog from "./pages/CategoryBlog";
-// import ScrollToTop from "./components/ScrollToTop";
-// import Blogs from "./pages/Blogs";
 
 function App() {
   const [active, setActive] = useState("home");
@@ -51,21 +47,10 @@ function App() {
         user={user}
         handleLogout={handleLogout}
       />
-      {/* <ScrollToTop /> */}
       <ToastContainer position="top-center" />
       <Routes>
-        <Route
-          path="/"
-          element={<Home setActive={setActive} active={active} user={user} />}
-        />
-        <Route
-          path="/search"
-          element={<Home setActive={setActive} user={user} />}
-        />
-        <Route
-          path="/detail/:id"
-          element={<Detail setActive={setActive} user={user} />}
-        />
+        <Route path="/" element={<Home setActive={setActive} user={user} />} />
+        <Route path="/detail/:id" element={<Detail setActive={setActive} />} />
         <Route
           path="/create"
           element={
@@ -82,9 +67,6 @@ function App() {
             )
           }
         />
-        {/* <Route path="/blogs" element={<Blogs setActive={setActive} />} />
-        <Route path="/tag/:tag" element={<TagBlog setActive={setActive} />} />
-        <Route path="/category/:category" element={<CategoryBlog setActive={setActive}  />} /> */}
         <Route path="/about" element={<About />} />
         <Route
           path="/auth"

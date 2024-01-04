@@ -1,9 +1,9 @@
-import React, { useState } from "react";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   updateProfile,
 } from "firebase/auth";
+import React, { useState } from "react";
 import { toast } from "react-toastify";
 import { auth } from "../firebase";
 import { useNavigate } from "react-router-dom";
@@ -16,11 +16,11 @@ const initialState = {
   confirmPassword: "",
 };
 
-const Auth = ({ setActive }) => {
+const Auth = ({ setActive, setUser }) => {
   const [state, setState] = useState(initialState);
   const [signUp, setSignUp] = useState(false);
 
-  const { firstName, lastName, email, password, confirmPassword } = state;
+  const { email, password, firstName, lastName, confirmPassword } = state;
 
   const navigate = useNavigate();
 
@@ -37,14 +37,14 @@ const Auth = ({ setActive }) => {
           email,
           password
         );
-        toast.success("Login successfully")
+        setUser(user);
         setActive("home");
       } else {
         return toast.error("All fields are mandatory to fill");
       }
     } else {
       if (password !== confirmPassword) {
-        return toast.error("Password not match");
+        return toast.error("Password don't match");
       }
       if (firstName && lastName && email && password) {
         const { user } = await createUserWithEmailAndPassword(
@@ -53,7 +53,6 @@ const Auth = ({ setActive }) => {
           password
         );
         await updateProfile(user, { displayName: `${firstName} ${lastName}` });
-        toast.success("User created successfully");
         setActive("home");
       } else {
         return toast.error("All fields are mandatory to fill");
@@ -61,6 +60,7 @@ const Auth = ({ setActive }) => {
     }
     navigate("/");
   };
+
   return (
     <div className="container-fluid mb-4">
       <div className="container">
@@ -132,7 +132,7 @@ const Auth = ({ setActive }) => {
               <div className="col-12 py-3 text-center">
                 <button
                   className={`btn ${!signUp ? "btn-sign-in" : "btn-sign-up"}`}
-                  type="Submit"
+                  type="submit"
                 >
                   {!signUp ? "Sign-in" : "Sign-up"}
                 </button>
@@ -143,13 +143,11 @@ const Auth = ({ setActive }) => {
                 <>
                   <div className="text-center justify-content-center mt-2 pt-2">
                     <p className="small fw-bold mt-2 pt-1 mb-0">
-                      Dont have an account? &nbsp;
+                      Don't have an account ?&nbsp;
                       <span
                         className="link-danger"
                         style={{ textDecoration: "none", cursor: "pointer" }}
-                        onClick={() => {
-                          setSignUp(true);
-                        }}
+                        onClick={() => setSignUp(true)}
                       >
                         Sign Up
                       </span>
@@ -160,16 +158,14 @@ const Auth = ({ setActive }) => {
                 <>
                   <div className="text-center justify-content-center mt-2 pt-2">
                     <p className="small fw-bold mt-2 pt-1 mb-0">
-                      Already have an account? &nbsp;
+                      Already have an account ?&nbsp;
                       <span
                         style={{
                           textDecoration: "none",
                           cursor: "pointer",
                           color: "#298af2",
                         }}
-                        onClick={() => {
-                          setSignUp(false);
-                        }}
+                        onClick={() => setSignUp(false)}
                       >
                         Sign In
                       </span>

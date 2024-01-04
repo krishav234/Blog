@@ -20,8 +20,6 @@ const initialState = {
   trending: "no",
   category: "",
   description: "",
-  comments: [],
-  likes: [],
 };
 
 const categoryOption = [
@@ -142,6 +140,7 @@ const AddEditBlog = ({ user, setActive }) => {
     } else {
       return toast.error("All fields are mandatory to fill");
     }
+
     navigate("/");
   };
 
@@ -174,7 +173,7 @@ const AddEditBlog = ({ user, setActive }) => {
                 />
               </div>
               <div className="col-12 py-3">
-                <p className="trending">Is it trending blog?</p>
+                <p className="trending">Is it trending blog ?</p>
                 <div className="form-check-inline mx-2">
                   <input
                     type="radio"
