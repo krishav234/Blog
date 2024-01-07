@@ -42,6 +42,8 @@ const AddEditBlog = ({ user, setActive }) => {
 
   const { title, tags, category, trending, description } = form;
 
+  
+
   useEffect(() => {
     const uploadFile = () => {
       const storageRef = ref(storage, file.name);

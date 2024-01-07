@@ -14,6 +14,7 @@ import Header from "./components/Header";
 import Auth from "./pages/Auth";
 import { auth } from "./firebase";
 import { signOut } from "firebase/auth";
+import UserNotLoggedIn from "./components/UserNotLoggedIn";
 
 function App() {
   const [active, setActive] = useState("home");
@@ -54,25 +55,20 @@ function App() {
         <Route
           path="/create"
           element={
-            user?.uid ? <AddEditBlog user={user} /> : <Navigate to="/" />
+            user?.uid ? <AddEditBlog user={user} /> : <Navigate to="/usernotlogin" />
           }
         />
         <Route
           path="/update/:id"
           element={
-            user?.uid ? (
-              <AddEditBlog user={user} setActive={setActive} />
-            ) : (
-              <Navigate to="/" />
-            )
+            user?.uid ? <AddEditBlog user={user} setActive={setActive} /> : <Navigate to="/" />
           }
         />
         <Route path="/about" element={<About />} />
-        <Route
-          path="/auth"
-          element={<Auth setActive={setActive} setUser={setUser} />}
-        />
+        <Route path="/auth" element={<Auth setActive={setActive} setUser={setUser} />} />
         <Route path="*" element={<NotFound />} />
+        <Route path="/usernotlogin" element={<UserNotLoggedIn/>} />
+
       </Routes>
     </div>
   );
